@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Form</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: url('./images/cup.jpg') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .signup-container {
+            background-color: none;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            width: 300px;
+        }
+
+        .signup-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .signup-form label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .signup-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .signup-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: chocolate;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .signup-form button:hover {
+            background-color: black;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .login-link a {
+            color: black;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .main-nav {
+            width: 100%;
+            background-color: none;
+            padding: 10px 0;
+            position: fixed;
+            top: 0;
+            left: 10;
+            display: flex;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .main-nav li {
+            display: inline-block;
+            margin-left: 40px;
+        }
+
+        .main-nav li:first-child {
+            margin-left: 0;
+        }
+
+        .main-nav li a {
+            padding: 8px 0;
+            color: #ffffff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 90%;
+            border-bottom: 2px solid transparent;
+            transition: border-bottom 0.2s;
+        }
+
+        .main-nav li a:hover,
+        .main-nav li a:active {
+            border-bottom: 2px solid #e67e22;
+        }
+    </style>
+</head>
+<body>
+    <ul class="main-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html">About us</a></li>
+        <li><a href="index.html">How it works</a></li>
+        <li><a href="index.html">Our Cities</a></li>
+        <li><a href="signup.html">Sign up</a></li>
+    </ul>
+    <div class="signup-container">
+        <div class="signup-form">
+            <h2>Sign Up</h2>
+            <form id="signupForm" action="#" method="post">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="submit">Sign Up</button>
+            </form>
+            <div class="login-link">
+                <p>Already have an account? <a href="login.html">Log in</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to get users from localStorage
+        function getUsers() {
+            const users = localStorage.getItem('users');
+            return users ? JSON.parse(users) : [];
+        }
+
+        // Function to save users to localStorage
+        function saveUsers(users) {
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting the traditional way
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Get the current users from localStorage
+            const users = getUsers();
+
+            // Check if the user already exists
+            const userExists = users.some(user => user.email === email);
+
+            if (userExists) {
+                alert('User already exists. Please use a different email.');
+            } else {
+                // Add new user to the users array
+                users.push({ email, password });
+                saveUsers(users); // Save the updated users list to localStorage
+                alert('Sign up successful! Redirecting to login page...');
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
+</body>
+</html>
